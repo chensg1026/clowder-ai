@@ -201,7 +201,10 @@ function buildSessionParams(
   options?: AgentServiceOptions,
 ): Record<string, unknown> {
   const resolvedWorkingDirectory = workingDirectory ?? providerProfile.cwd;
-  const mcpServers = buildAcpMcpServers(initializeResult, resolvedWorkingDirectory, options);
+  const mcpServers = buildAcpMcpServers(initializeResult, {
+    ...options,
+    ...(resolvedWorkingDirectory ? { workingDirectory: resolvedWorkingDirectory } : {}),
+  });
   return {
     ...(resolvedWorkingDirectory ? { cwd: resolvedWorkingDirectory } : {}),
     mcpServers,
